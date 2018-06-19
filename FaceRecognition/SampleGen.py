@@ -15,7 +15,7 @@ while True:
     for(x,y,w,h) in cropFaces:
         i=i+1
         crop=gray[y-offset:y+h+offset,x-offset:x+w+offset]
-        cv2.imwrite("dataSet/face-"+id +'.'+ str(i) + ".jpg",crop )
+        cv2.imwrite("SampleFaces/face-"+id +'.'+ str(i) + ".jpg",crop )
         cv2.rectangle(im,(x-50,y-50),(x+w+50,y+h+50),(225,0,0),2)
         cv2.waitKey(100)
     if i>50:
