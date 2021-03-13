@@ -22,7 +22,7 @@ def detect_face_and_crop(img):
         for x,y,w,h in faces:
             crop=gray[y-offset:y+h+offset,x-offset:x+w+offset] ## Cropping the Face from the gray scale image. Adjust the variable offset if full face is not cropped  
             samples=samples+1
-            cv2.imwrite("SampleFace/face-"+str(identification) +'.'+ str(samples) + ".jpg",crop) ## Saving the cropped image
+            cv2.imwrite("SampleFace/Person_Face"+str(identification) +'.'+ str(samples) + ".jpg",crop) ## Saving the cropped image
             
             cv2.rectangle(face_img,(x,y),(x+w,y+h),(255,255,255),2) ##drawing rectangle to the color image(frame)
         return face_img
