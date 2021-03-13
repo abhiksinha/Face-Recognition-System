@@ -16,7 +16,7 @@ def detect_face_and_crop(img):
         global identification,samples
         
         face_img=img.copy()
-        gray=cv2.cvtColor(face_img,cv2.COLOR_BGR2RGB) ##converting to grayscale
+        gray=cv2.cvtColor(face_img,cv2.COLOR_BGR2GRAY) ##converting to grayscale
         faces=face_class.detectMultiScale(gray,scaleFactor=1.2,minNeighbors=5,flags=cv2.CASCADE_SCALE_IMAGE) ##Detect the face,parameters like minNeighbers, scaleFactor should be adjusted 
 
         for x,y,w,h in faces:
