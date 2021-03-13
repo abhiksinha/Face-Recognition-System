@@ -1,42 +1,45 @@
 import cv2
 import os
 import numpy as np
-from PIL import Image 
-
-recognizer = cv2.createLBPHFaceRecognizer()
-cascadePath = "Classifiers/haarcascade_frontalface_default.xml"
-faceCascade = cv2.CascadeClassifier(cascadePath);
-path = 'Samplefaces'
-print "adding you to system"
-def get_images_and_labels(path):
-# Reading Images and Labels id
-     image_paths = [os.path.join(path, f) for f in os.listdir(path)]
-     images = []
-     labels = []
-     for image_path in image_paths:
-     # converting RGB to Gray
-         image_pil = Image.open(image_path).convert('L')
-      # gray to numpy array for direct Matrix Operation
-         image = np.array(image_pil, 'uint8')
-          # Seperating Image ids
-         lab = int(os.path.split(image_path)[1].split(".")[0].replace("face-", ""))
-         
-         
-         # Detect the face in the image
-         faces = faceCascade.detectMultiScale(image)
-         # If face is detected, append the face to images and the label to labels
-         for (x, y, w, h) in faces:
-             images.append(image[y: y + h, x: x + w])
-             labels.append(lab)
-             cv2.imshow("Adding faces to traning set...", image[y: y + h, x: x + w])
-             cv2.waitKey(10)
-     return images, labels
 
 
-images, labels = get_images_and_labels(path)
-cv2.imshow('test',images[0])
-cv2.waitKey(1)
+face_class=cv2.CascadeClassifier('Classifier\haarcascade_frontalface_default.xml')
+folder = 'Sampleface'
+print ("adding faces to the system")
 
-recognizer.train(images, np.array(labels))
-recognizer.save('trainer/trainer.yml')
+## Function to load all the images and corresponding ids
+def load_images_from_folder(folder):
+    images = []
+    identification=[]
+     
+    for filename in os.listdir(folder): 
+        img = cv2.imread(os.path.join(folder,filename)) 
+        gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) 
+     
+        ids = int(os.path.split(filename)[1].split(".")[0].replace("Person_Face", ""))  ## Filtering Id value from File Name
+        faces=face_class.detectMultiScale(gray)  ## Detecting faces again just to double check
+     
+     
+        for x,y,w,h in faces:
+            image=np.array(gray[y:y+h,x:x+w],'uint8') #converting image to numpy array just to make sure no error happens.
+            images.append(image)
+            identification.append(ids)
+            cv2.imshow("Adding faces to traning set...", image)
+            cv2.waitKey(10)
+
+            
+    return images,identification
+
+images, identification = load_images_from_folder(folder)
+print(type(images[0]))
+cv2.imshow("test..", images[0])
+
+cv2.waitKey(10)
+recognizer = cv2.face.LBPHFaceRecognizer_create() 
+recognizer.train(images, np.array(identification))  ###Training the module
+recognizer.save('trainer/trainer.yml')  ###Saving the trained module.This will use to detect the face
 cv2.destroyAllWindows()
+print('completed')
+
+
+
