@@ -37,7 +37,7 @@ cv2.imshow("test..", images[0])
 cv2.waitKey(10)
 recognizer = cv2.face.LBPHFaceRecognizer_create() 
 recognizer.train(images, np.array(identification))  ###Training the module
-recognizer.save('trainer/trainer.yml')  ###Saving the trained module.This will use to detect the face
+recognizer.save('trainer/trainer.yml')  ###Saving the trained module.This will use to Recognize the face later on. 
 cv2.destroyAllWindows()
 print('completed')
 
