@@ -10,6 +10,6 @@ Python 3.6 <br/>
 numpy <br/>
 OpenCv library <br/>
 To install Opencv library using pip use the following command: <br/>
-pip install opencv-python==4.3.0
-pip install opencv-contrib-python==4.3.0.36
-Feel Free to contribute :)
+pip install opencv-python==4.3.0 <br/>
+pip install opencv-contrib-python==4.3.0.36 <br/>
+Enjoy Learning and Feel Free to contribute :) <br/>
